@@ -47,5 +47,5 @@ To run the project, follow these steps:
 
 ### Note
 
-- File __data/individual_household_electric_power_consumption/household_power_consumption.cs__ is missing, but you can
+- File __data/individual_household_electric_power_consumption/household_power_consumption.csv__ is missing, but you can
   get it from the zip file.
