@@ -1,0 +1,69 @@
+{
+    "lightgbm": {
+        "model_type": "LightGBM Regressor",
+        "training_date": "2025-11-07 02:44:18",
+        "train_period": "2002-01-01 01:00:00 to 2015-01-01 00:00:00",
+        "test_period": "2015-01-01 01:00:00 to 2018-08-03 00:00:00",
+        "metrics": {
+            "MAE": 2982.084005052834,
+            "MAPE": 9.490459729629066,
+            "RMSE": 3848.683771345006,
+            "peak_absolute_error": 10460.482652363178,
+            "peak_percentage_error": 18.47847983953643
+        },
+        "hyperparameters": {
+            "n_estimators": 1000,
+            "learning_rate": 0.05,
+            "max_depth": 10,
+            "num_leaves": 100,
+            "min_child_samples": 20,
+            "subsample": 0.8,
+            "colsample_bytree": 0.8
+        },
+        "features": [
+            "hour",
+            "dayofweek",
+            "quarter",
+            "month",
+            "year",
+            "dayofyear",
+            "dayofmonth",
+            "weekofyear",
+            "season"
+        ],
+        "categorical_features": [
+            "season"
+        ]
+    },
+    "prophet_with_holidays": {
+        "model_type": "Prophet with US Federal Holidays",
+        "training_date": "2025-11-07 02:44:18",
+        "train_period": "2002-01-01 01:00:00 to 2015-01-01 00:00:00",
+        "test_period": "2015-01-01 01:00:00 to 2018-08-03 00:00:00",
+        "metrics": {
+            "MAE": 5201.481641082228,
+            "MAPE": 16.558679824986207,
+            "RMSE": 6639.651762773761,
+            "peak_absolute_error": 18587.061445635096,
+            "peak_percentage_error": 32.83411020444646
+        },
+        "holidays_included": true,
+        "holiday_count": 164
+    },
+    "prophet_simple": {
+        "model_type": "Prophet (Simple)",
+        "training_date": "2025-11-07 02:44:18",
+        "train_period": "2002-01-01 01:00:00 to 2015-01-01 00:00:00",
+        "test_period": "2015-01-01 01:00:00 to 2018-08-03 00:00:00",
+        "metrics": {
+            "MAE": 5181.902492927457,
+            "MAPE": 16.512083240542825,
+            "RMSE": 6616.929727126127
+        },
+        "holidays_included": false
+    },
+    "comparison": {
+        "best_model": "LightGBM",
+        "winner_count": "8/8 metrics"
+    }
+}

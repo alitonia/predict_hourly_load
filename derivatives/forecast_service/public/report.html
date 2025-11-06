@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Viewer - Power Demand Forecasting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .glass-effect {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .markdown-body {
+            color: #e2e8f0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .markdown-body h1 {
+            color: #60a5fa;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid rgba(96, 165, 250, 0.4);
+            letter-spacing: -0.5px;
+        }
+
+        .markdown-body h2 {
+            color: #34d399;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid rgba(52, 211, 153, 0.3);
+        }
+
+        .markdown-body h3 {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-body h4 {
+            color: #f472b6;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-body h5, .markdown-body h6 {
+            color: #a78bfa;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-body ul li::marker {
+            color: #60a5fa;
+            font-size: 1.2em;
+        }
+
+        .markdown-body ol li::marker {
+            color: #34d399;
+            font-weight: 700;
+        }
+
+        .markdown-body blockquote {
+            border-left: 4px solid #60a5fa;
+            margin: 1.5rem 0;
+            background: rgba(96, 165, 250, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            font-style: italic;
+            color: #94a3b8;
+        }
+
+        .markdown-body code {
+            background: rgba(96, 165, 250, 0.15);
+            color: #93c5fd;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.375rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .markdown-body pre {
+            background: #1e293b;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .markdown-body pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+            border: none;
+            font-size: 0.95em;
+        }
+
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .markdown-body th {
+            background: rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(96, 165, 250, 0.4);
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.5px;
+        }
+
+        .markdown-body td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            color: #cbd5e1;
+        }
+
+        .markdown-body tr:last-child td {
+            border-bottom: none;
+        }
+
+        .markdown-body tr:hover {
+            background: rgba(96, 165, 250, 0.08);
+        }
+
+        .markdown-body a {
+            color: #60a5fa;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .markdown-body a:hover {
+            color: #93c5fd;
+            border-bottom-color: #93c5fd;
+        }
+
+        .markdown-body hr {
+            border: none;
+            border-top: 2px solid rgba(148, 163, 184, 0.2);
+            margin: 2.5rem 0;
+        }
+
+        .markdown-body strong {
+            color: #fbbf24;
+            font-weight: 700;
+        }
+
+        .markdown-body em {
+            color: #f472b6;
+            font-style: italic;
+        }
+
+        .markdown-body img {
+            max-width: 100%;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .input-area {
+            min-height: 400px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .input-area::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .input-area::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 5px;
+        }
+
+        .input-area::-webkit-scrollbar-thumb {
+            background: rgba(96, 165, 250, 0.3);
+            border-radius: 5px;
+        }
+
+        .input-area::-webkit-scrollbar-thumb:hover {
+            background: rgba(96, 165, 250, 0.5);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-accent:hover {
+            background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(96, 165, 250, 0.3);
+            border-top: 3px solid #60a5fa;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: rgba(96, 165, 250, 0.2);
+            border-bottom: 3px solid #60a5fa;
+        }
+
+        .tab-button:hover {
+            background: rgba(96, 165, 250, 0.1);
+        }
+    </style>
+</head>
+<body class="p-6">
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="glass-effect rounded-2xl p-6 mb-6 fade-in">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400">
+                    📊 Report Viewer
+                </h1>
+                <p class="text-gray-400 mt-2">Paste your markdown and see it rendered beautifully</p>
+            </div>
+            <a href="/"
+               class="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105">
+                ← Back to Home
+            </a>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="glass-effect rounded-2xl mb-6 fade-in">
+        <div class="flex border-b border-gray-700">
+            <button id="editorTab" class="tab-button active flex-1 px-6 py-4 text-white font-semibold">
+                ✏️ Editor
+            </button>
+            <button id="previewTab" class="tab-button flex-1 px-6 py-4 text-white font-semibold">
+                👁️ Preview
+            </button>
+        </div>
+    </div>
+
+    <!-- Editor Section -->
+    <div id="editorSection" class="glass-effect rounded-2xl p-6 mb-6 fade-in">
+        <div class="mb-4">
+            <label class="block text-gray-300 font-semibold mb-2">Paste your Markdown here:</label>
+            <textarea
+                    id="markdownInput"
+                    class="w-full input-area bg-gray-900 text-gray-200 border border-gray-700 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="# Your Markdown Here
+
+## Example
+This is a **bold** text and this is *italic* text.
+
+- List item 1
+- List item 2
+- List item 3
+
+[Link](https://example.com)
+
+> This is a blockquote
+
+```javascript
+console.log('Hello World');
+```
+
+| Column 1 | Column 2 |
+|----------|----------|
+| Cell 1   | Cell 2   |
+
+![Alt Text](https://via.placeholder.com/150)
+"></textarea>
+        </div>
+        <div class="flex justify-end space-x-4">
+            <button id="clearBtn"
+                    class="px-6 py-3 btn-danger text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                🗑️ Clear
+            </button>
+            <button id="renderBtn"
+                    class="px-6 py-3 btn-primary text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                🚀 Render Markdown
+            </button>
+        </div>
+    </div>
+
+    <!-- Preview Section -->
+    <div id="previewSection" class="glass-effect rounded-2xl p-6 fade-in hidden">
+        <div class="mb-4">
+            <h2 class="text-2xl font-bold text-gray-300 mb-4">Preview</h2>
+            <div id="markdownOutput" class="markdown-body"></div>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="hidden glass-effect rounded-2xl p-6 mb-6 fade-in">
+        <div class="flex flex-col items-center justify-center">
+            <div class="loading-spinner mb-4"></div>
+            <p class="text-gray-300">Rendering your markdown...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Get signature from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const signature = urlParams.get('signature');
+
+    if (signature) {
+        // Fetch the report using the signature
+        fetch(`/get-report/${signature}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Report not found or expired');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Auto-populate the markdown input with the report
+                document.getElementById('markdownInput').value = data.report;
+
+                // Automatically render the report
+                document.getElementById('renderBtn').click();
+
+                // Switch to preview tab
+                document.getElementById('previewTab').click();
+
+                // Add report metadata to the page
+                const metadataDiv = document.createElement('div');
+                metadataDiv.className = 'glass-effect rounded-2xl p-6 mb-6 fade-in';
+                metadataDiv.innerHTML = `
+                    <h3 class="text-xl font-bold text-gray-300 mb-3">📋 Report Metadata</h3>
+                    <div class="grid grid-cols-2 gap-4 text-gray-400">
+                        <div><strong>Generated At:</strong> ${data.metadata.generated_at}</div>
+                        <div><strong>Model Used:</strong> ${data.metadata.model_used}</div>
+                        <div><strong>Start Date:</strong> ${data.prediction_summary.start_date}</div>
+                        <div><strong>End Date:</strong> ${data.prediction_summary.end_date}</div>
+                        <div><strong>Mean Power:</strong> ${data.prediction_summary.mean_power_mw.toFixed(2)} MW</div>
+                        <div><strong>Peak Power:</strong> ${data.prediction_summary.max_power_mw.toFixed(2)} MW</div>
+                    </div>
+                `;
+
+                // Insert metadata before the preview section
+                const previewSection = document.getElementById('previewSection');
+                previewSection.parentNode.insertBefore(metadataDiv, previewSection);
+            })
+            .catch(error => {
+                console.error('Error loading report:', error);
+                alert('Failed to load report. The report may have expired or does not exist.');
+            });
+    }
+
+    // Tab switching functionality
+    document.getElementById('editorTab').addEventListener('click', function() {
+        document.getElementById('editorSection').classList.remove('hidden');
+        document.getElementById('previewSection').classList.add('hidden');
+        this.classList.add('active');
+        document.getElementById('previewTab').classList.remove('active');
+    });
+
+    document.getElementById('previewTab').addEventListener('click', function() {
+        document.getElementById('editorSection').classList.add('hidden');
+        document.getElementById('previewSection').classList.remove('hidden');
+        this.classList.add('active');
+        document.getElementById('editorTab').classList.remove('active');
+    });
+
+    // Clear button functionality
+    document.getElementById('clearBtn').addEventListener('click', function() {
+        document.getElementById('markdownInput').value = '';
+        document.getElementById('markdownOutput').innerHTML = '';
+        localStorage.removeItem('markdownContent');
+    });
+
+    // Render button functionality
+    document.getElementById('renderBtn').addEventListener('click', function() {
+        let markdownInput = document.getElementById('markdownInput').value;
+
+        if (!markdownInput.trim()) {
+            alert('Please enter some markdown content.');
+            return;
+        }
+
+        // Show loading indicator
+        document.getElementById('loadingIndicator').classList.remove('hidden');
+        document.getElementById('previewSection').classList.add('hidden');
+
+        // Simulate processing delay for better UX
+        setTimeout(() => {
+             marked.setOptions({
+                breaks: true,
+                gfm: true,
+                headerIds: true,
+                mangle: false
+            });
+            let output = marked.parse(markdownInput);
+            output = output.replaceAll("\\n", "<br>");
+            output = output.replaceAll(/#+/g, "");
+
+            document.getElementById('markdownOutput').innerHTML = output;
+
+            // Hide loading indicator and show preview
+            document.getElementById('loadingIndicator').classList.add('hidden');
+            document.getElementById('previewSection').classList.remove('hidden');
+
+            // Highlight code blocks
+            document.querySelectorAll('pre code').forEach((block) => {
+                let b = block
+                hljs.highlightElement(b);
+            });
+            document.getElementById('previewSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        }, 500);
+    });
+
+    // Initialize with sample content
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load saved content from localStorage
+        const savedMarkdown = localStorage.getItem('markdownContent');
+        if (savedMarkdown) {
+            document.getElementById('markdownInput').value = savedMarkdown;
+        } else {
+            document.getElementById('markdownInput').placeholder = "input your markdown here";
+        }
+
+        // Auto-save to localStorage on input
+        document.getElementById('markdownInput').addEventListener('input', function() {
+            localStorage.setItem('markdownContent', this.value);
+        });
+    });
+</script>
+</body>
+</html>

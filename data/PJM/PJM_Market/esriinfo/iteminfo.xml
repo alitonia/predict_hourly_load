@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ESRI_ItemInformation Culture='en-US'>
+<name>PJM_Market</name>
+<guid>0EA92B84-0762-4DBD-8F69-73C157C1D8AC</guid>
+<version>1.0</version>
+<created></created>
+<modified></modified>
+<catalogpath></catalogpath>
+<snippet>This feature class/shapefile is for the Homeland Infrastructure Foundation Level Database (HIFLD) (https://gii.dhs.gov/HIFLD) as well as the Energy modelling and simulation community.</snippet>
+<description>&lt;DIV STYLE=&quot;text-align:Left;&quot;&gt;&lt;DIV&gt;&lt;P&gt;&lt;SPAN&gt;This feature class/shapefile represents electric power Independent System Operators. Independent System Operators were set up by the Federal Energy Regulatory Commission (FERC) to provide non-discriminatory access to power and to more adequately administer the transmission grid on a regional basis throughout North America. The following updates have been made since the previous release: updated attribution using best available sources.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;&lt;/DIV&gt;</description>
+<summary>This feature class/shapefile is for the Homeland Infrastructure Foundation Level Database (HIFLD) (https://gii.dhs.gov/HIFLD) as well as the Energy modelling and simulation community.</summary>
+<title>PJM Market</title>
+<tags>homeland security,homeland defense,emergency response,name,electricity,power,generation,Independent System Operators,Regional Transmission Organization,megawatts,peak demand,energy infrastructure</tags>
+<type>Service Definition</type>
+<typekeywords>
+<typekeyword>ArcGIS</typekeyword>
+<typekeyword>Service Definition</typekeyword>
+<typekeyword>.sd</typekeyword>
+</typekeywords>
+<thumbnail>thumbnail/thumbnail.png</thumbnail>
+<documentation></documentation>
+<url></url>
+<extent>
+<xmin>-90.852347471612</xmin>
+<ymin>34.5482366059809</ymin>
+<xmax>-73.4836077407661</xmax>
+<ymax>43.5200877592165</ymax>
+</extent>
+<spatialreference>Albers_Conical_Equal_Area</spatialreference>
+<minScale>0</minScale>
+<maxScale>1.7976931348623157e+308</maxScale>
+<datalastModifiedTime></datalastModifiedTime>
+<accessinformation>Oak Ridge National Laboratory (ORNL), Los Alamos National Laboratory (LANL), Idaho National Laboratory (INL), National Geospatial-Intelligence Agency (NGA) Homeland Security Infrastructure Program (HSIP) Team</accessinformation>
+<licenseinfo>&lt;DIV STYLE=&quot;text-align:Left;&quot;&gt;&lt;DIV&gt;&lt;P&gt;&lt;SPAN&gt;None (Public Use). Users are advised to read the data set&apos;s metadata thoroughly to understand appropriate use and data limitations.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;&lt;/DIV&gt;</licenseinfo>
+</ESRI_ItemInformation>

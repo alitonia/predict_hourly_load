@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl" href="http://www.arcgisonline.com/home/pkinfostylesheet.xsl"?>
+<pkinfo Culture='en-US'>
+<ID>0EA92B84-0762-4DBD-8F69-73C157C1D8AC</ID>
+<name>PJM_Market</name>
+<version>12.3</version>
+<size>-1</size>
+<created></created>
+<type>Service Definition</type>
+<servable>true</servable>
+<packagelocation></packagelocation>
+<pkinfolocation></pkinfolocation>
+<documenttypes>
+<documenttype>msd</documenttype>
+</documenttypes>
+</pkinfo>
