@@ -49,3 +49,5 @@ To run the project, follow these steps:
 
 - File __data/individual_household_electric_power_consumption/household_power_consumption.csv__ is missing, but you can
   get it from the zip file.
+- For weather-related work, please download the archived hourly weather data from noaa, put it in __data/noaa_weather__
+  directory.
